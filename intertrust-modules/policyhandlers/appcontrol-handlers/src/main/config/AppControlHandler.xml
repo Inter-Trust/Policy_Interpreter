@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<authorizationHandlerConfig>
+    <category>http://inter-trust.eu/appcontrol</category>
+    <type>http://inter-trust.eu/appcontrol/stopexecution</type>
+    <targets>
+        <target name="L1">http://inter-trust.eu/evoting/l1entrypoint</target>
+        <target name="L2">http://inter-trust.eu/evoting/l2entrypoint</target>
+        <target name="L3">http://inter-trust.eu/evoting/l3entrypoint</target>
+        <target name="L4">http://inter-trust.eu/evoting/l4entrypoint</target>
+        <target name="L5">http://inter-trust.eu/evoting/l5entrypoint</target>
+        <target name="L1_b">http://inter-trust.eu/evoting/l1bentrypoint</target>
+    </targets>
+    <actions>
+        <action name="StopVoting" id="http://inter-trust.eu/appcontrol/evoting/stopvoting"/>
+    </actions>
+</authorizationHandlerConfig>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<authorizationHandlerConfig>
+    <policyAction>authorize</policyAction>
+    <category>http://inter-trust.eu/security/accesscontrol</category>
+    <type>http://inter-trust.eu/security/authorization</type>
+    <functionality>http://inter-trust.eu/security/authorization/intertrustauthz</functionality>
+    <targets>
+        <target name="csa-request">http://inter-trust.eu/csa/central/csaentrypoint</target>
+        <target name="L4">http://inter-trust.eu/evoting/l4entrypoint</target>
+        <target name="L5">http://inter-trust.eu/evoting/l5entrypoint</target>
+    </targets>
+</authorizationHandlerConfig>

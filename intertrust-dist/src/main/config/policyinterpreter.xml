@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policyInterpreterConfig>
+    <policyHandlersDir>handlers</policyHandlersDir>
+    <policyHandlersConf>conf</policyHandlersConf>
+    <properties>
+        <entry key="notification.broker-url">tcp://localhost:61616</entry>
+        <!--<entry key="notification.broker-url">tcp://10.8.0.1:61616</entry>-->
+    </properties>
+    <policy>
+        <policyNotificationHandler>es.umu.intertrust.policyinterpreter.orbac.OrbacPolicyNotificationHandler</policyNotificationHandler>
+        <queryManagers>
+            <queryManager>es.umu.intertrust.policyinterpreter.orbac.OrbacQueryManager</queryManager>
+        </queryManagers>
+        <preconditionAvailableClasses>
+            <class>es.umu.intertrust.policyinterpreter.orbac.Obligation</class>
+        </preconditionAvailableClasses>
+        <properties>
+            <entry key="policymanager.warnUnrelatedRuleDeactivations">false</entry>
+            <entry key="notification.topic">PolicyNotifications</entry>
+            <entry key="notification.name.prefix">Vehicle</entry>
+        </properties>
+    </policy>
+    <deployment>
+        <deploymentEnforcer>es.umu.intertrust.policyinterpreter.sds.SDSEnforcer</deploymentEnforcer>
+        <queryManagers>
+            <queryManager>es.umu.intertrust.policyinterpreter.sds.SDSQueryManager</queryManager>
+        </queryManagers>
+        <preconditionAvailableClasses>
+            <class>es.umu.intertrust.policyinterpreter.sds.SecurityFeature</class>
+            <class>es.umu.intertrust.policyinterpreter.sds.SDSTarget</class>
+        </preconditionAvailableClasses>
+        <properties>
+            <entry key="notification.topic">SecurityDeploymentNotifications</entry>
+            <entry key="sds.operators.checkExternalChanges">false</entry>
+        </properties>
+    </deployment>
+</policyInterpreterConfig>

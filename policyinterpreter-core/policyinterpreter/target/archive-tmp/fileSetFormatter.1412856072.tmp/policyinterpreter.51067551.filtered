@@ -1,0 +1,101 @@
+#!/bin/sh
+
+# Home directory
+if [ -z "$POLICYINTERPRETER_HOME" ]; then
+	DIRNAME=`dirname "$0"`
+	POLICYINTERPRETER_HOME=`cd "$DIRNAME/.." && pwd`
+fi
+
+# Configuration directory
+if [ -z "$POLICYINTERPRETER_CONF" ]; then
+	POLICYINTERPRETER_CONF="$POLICYINTERPRETER_HOME/conf"
+fi
+
+# Library directory
+if [ -z "$POLICYINTERPRETER_LIB" ]; then
+	POLICYINTERPRETER_LIB="$POLICYINTERPRETER_HOME/lib"
+fi
+
+# Jar file
+if [ -z "$POLICYINTERPRETER_JAR" ]; then
+	POLICYINTERPRETER_JAR="$POLICYINTERPRETER_LIB/#policyinterpreter-1.0-SNAPSHOT.jar"
+fi
+
+# Main class
+if [ -z "$POLICYINTERPRETER_MAINCLASS" ]; then
+	POLICYINTERPRETER_MAINCLASS="es.umu.intertrust.policyinterpreter.PolicyInterpreter"
+fi
+
+# Logging properties file
+if [ -z "$POLICYINTERPRETER_LOGPROPERTIES" ]; then
+	POLICYINTERPRETER_LOGPROPERTIES="$POLICYINTERPRETER_CONF/logging.properties"
+fi
+
+# PID file
+if [ -z "$POLICYINTERPRETER_PIDFILE" ]; then
+	POLICYINTERPRETER_PIDFILE="$POLICYINTERPRETER_HOME/policyinterpreter.pid"
+fi
+
+# Java command
+if [ ! -z "$JAVA_HOME" ]; then
+	JAVA_CMD="$JAVA_HOME/bin/java"
+else
+	JAVA_CMD=`which java`
+fi
+if [ ! -x "$JAVA_CMD" ]; then
+	echo "ERROR: Unable to determine java command."
+	exit 1
+fi
+
+# Classpath
+POLICYINTERPRETER_CLASSPATH="$POLICYINTERPRETER_LIB/*"
+if [ ! -z "$CLASSPATH" ]; then
+	POLICYINTERPRETER_CLASSPATH="$CLASSPATH:$POLICYINTERPRETER_CLASSPATH"
+fi
+
+check_running() {
+	if [ -e "$POLICYINTERPRETER_PIDFILE" ]; then
+		echo "ERROR: Policy interpreter is already running (PID: " `cat $POLICYINTERPRETER_PIDFILE` ")"
+		exit 1
+	fi
+}
+
+# Start
+start() {
+	check_running
+	echo "Starting policy interpreter..."
+	sh -c "cd ${POLICYINTERPRETER_HOME}
+	${JAVA_CMD} -cp \"${POLICYINTERPRETER_CLASSPATH}\" -Dpolicyinterpreter.conf=\"${POLICYINTERPRETER_CONF}\" -Djava.util.logging.config.file=\"${POLICYINTERPRETER_LOGPROPERTIES}\" ${POLICYINTERPRETER_MAINCLASS} 2> /dev/null &
+	PID=\"\$!\"; echo \$PID > \"${POLICYINTERPRETER_PIDFILE}\""
+}
+
+# Stop
+stop() {
+	if [ ! -e "$POLICYINTERPRETER_PIDFILE" ]; then
+		echo "ERROR: No PID file found."
+		exit 1
+	fi
+	echo "Stopping Policy Interpreter..."
+	kill `cat $POLICYINTERPRETER_PIDFILE`
+	rm "$POLICYINTERPRETER_PIDFILE"
+}
+
+# Console
+console() {
+	check_running
+	`cd "$POLICYINTERPRETER_HOME" && "$JAVA_CMD" -cp "$POLICYINTERPRETER_CLASSPATH" -Dpolicyinterpreter.conf="$POLICYINTERPRETER_CONF" -Djava.util.logging.config.file="$POLICYINTERPRETER_LOGPROPERTIES" "$POLICYINTERPRETER_MAINCLASS"`
+}
+
+case "$1" in
+  start )
+    start
+    ;;
+  stop )
+	stop
+    ;;
+  console )
+	console
+	;;
+  * )
+    echo "Usage: policyinterpreter start | stop | console"
+esac

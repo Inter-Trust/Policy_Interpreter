@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policyInterpreterConfig>
+    <policyHandlersDir>handlers</policyHandlersDir>
+    <policyHandlersConf>conf</policyHandlersConf>
+    <properties>
+        <entry key="samplePropertyName">sampleValue</entry>
+    </properties>
+    <policy>
+        <policyNotificationHandler>org.sample.policy.SampleNotificationHandler</policyNotificationHandler>
+        <queryManagers>
+            <queryManager>org.sample.policy.SamplePolicyQueryManager</queryManager>
+        </queryManagers>
+        <preconditionAvailableClasses>
+            <class>org.sample.poliy.SamplePolicyRule</class>
+        </preconditionAvailableClasses>
+        <properties>
+            <entry key="policymanager.warnUnrelatedRuleDeactivations">false</entry>
+            <entry key="samplePolicyPropName">samplePolicyPropValue</entry>
+        </properties>
+    </policy>
+    <deployment>
+        <deploymentEnforcer>org.sample.deployment.SampleEnforcer</deploymentEnforcer>
+        <queryManagers>
+            <queryManager>org.sample.deployment.SampleDeploymentQueryManager</queryManager>
+        </queryManagers>
+        <preconditionAvailableClasses>
+            <class>org.sample.deployment.SampleDeploymentFeature</class>
+            <class>org.sample.deployment.SampleTarget</class>
+        </preconditionAvailableClasses>
+        <properties>
+            <entry key="sampleDeploymentPropName">sampleDeploymentPropValue</entry>
+        </properties>
+    </deployment>
+</policyInterpreterConfig>

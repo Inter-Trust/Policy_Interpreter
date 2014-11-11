@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messageDecryptionHandlerConfig>
+    <policyAction>verify_Sign</policyAction>
+    <category>http://inter-trust.eu/security/messagesecurity</category>
+    <type>http://inter-trust.eu/security/integrity</type>
+    <functionality>http://inter-trust.eu/security/integrity/verifysignature</functionality>
+    <targets>
+        <target name="Cam_Msg">http://inter-trust.eu/csa/central/trackingservice/camdecoding</target>
+        <target name="Speed_Not_Msg">http://inter-trust.eu/csa/vehicle/speednotifreceiver/hostforwarding</target>
+    </targets>
+    <formats>
+        <format name="etsi">http://inter-trust.eu/security/securemsgformat/etsi</format>
+        <format name="cms">http://inter-trust.eu/security/securemsgformat/cms</format>
+        <default>etsi</default>
+    </formats>
+    <keys>
+        <keyType name="X509" id="http://inter-trust.eu/security/authentication/x509certificate">
+            <key name="CentralITS">CN=CENTRAL_ITS-S, OU=ITS, O=ROAD_OPERATOR_A, C=ES</key>
+            <key name="DGT" policy-ref="dgt-ca">CN=CA.DGT.GOB.ES, OU=ITS, O=DIRECCION GENERAL DE TRAFICO, C=ES</key>
+            <default>DGT</default>
+        </keyType>
+        <keyType name="Shared" id="http://inter-trust.eu/security/authentication/sharedKey">
+            <key name="CentralITS">A158748E752C6F762232A9D1E7D7E</key>
+            <default>CentralITS</default>
+        </keyType>
+        <default>X509</default>
+    </keys>
+</messageDecryptionHandlerConfig>

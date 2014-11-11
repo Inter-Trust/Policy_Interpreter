@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+    <id>bin</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    
+    <includeBaseDirectory>false</includeBaseDirectory>
+    
+    <dependencySets>
+        <dependencySet>
+            <excludes>
+                <exclude>${project.groupId}:orbacsds-commons</exclude>
+                <exclude>${project.groupId}:*-handlers</exclude>
+            </excludes>
+            <outputDirectory>${project.dist.basedir}/lib</outputDirectory>
+            <useProjectArtifact>false</useProjectArtifact>
+        </dependencySet>
+    </dependencySets>
+    
+    <moduleSets>
+        <moduleSet>
+            <useAllReactorProjects>true</useAllReactorProjects>
+            <includes>
+                <include>${project.groupId}:policyinterpreter</include>
+            </includes>
+            <binaries>
+                <attachmentClassifier>bin</attachmentClassifier>
+                <includeDependencies>false</includeDependencies>
+                <unpack>true</unpack>
+                <unpackOptions>
+                    <excludes>
+                        <exclude>${project.dist.basedir}/conf/policyinterpreter.xml</exclude>
+                    </excludes>
+                </unpackOptions>
+            </binaries>
+        </moduleSet>
+        <moduleSet>
+            <useAllReactorProjects>true</useAllReactorProjects>
+            <includes>
+                <include>${project.groupId}:orbacsds-commons</include>
+                <include>${project.groupId}:*-handlers</include>
+            </includes>
+            <binaries>
+                <includeDependencies>false</includeDependencies>
+                <outputDirectory>${project.dist.basedir}/handlers</outputDirectory>
+                <unpack>false</unpack>
+            </binaries>
+            <sources>
+                <includeModuleDirectory>false</includeModuleDirectory>
+                <fileSets>
+                    <fileSet>
+                        <directory>${policyhandlers.configdir}</directory>
+                        <outputDirectory>${project.dist.basedir}/conf</outputDirectory>
+                    </fileSet>
+                </fileSets>
+            </sources>
+        </moduleSet>
+    </moduleSets>
+    
+    <fileSets>
+        <fileSet>
+            <directory>${project.configdir}</directory>
+            <outputDirectory>${project.dist.basedir}/conf</outputDirectory>
+        </fileSet>
+    </fileSets>
+    
+</assembly>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<obfuscationHandlerConfig>
+    <category>http://inter-trust.eu/security/privacy</category>
+    <type>http://inter-trust.eu/security/privacy</type>
+    <targets>
+        <target name="cam_GPS">http://inter-trust.eu/csa/vehicle/camsender/gpsreceiver/location</target>
+    </targets>
+    <procedures>
+        <procedure name="Hide" policy-ref="hide" id="http://inter-trust.eu/security/privacy/hide"/>
+        <procedure name="ResolutionModify" policy-ref="broadGPS" id="http://inter-trust.eu/security/privacy/resolution-modify">
+            <param name="resolution">10m</param>
+        </procedure>
+        <procedure name="DecimalApprox" id="http://inter-trust.eu/security/privacy/decimal-approx">
+            <param name="decimals"/>
+        </procedure>
+        <procedure name="GaussianNoise" id="http://inter-trust.eu/security/privacy/gaussian-noise">
+            <param name="mean"/>
+            <param name="variance"/>
+        </procedure>
+        <default>ResolutionModify</default>
+    </procedures>
+</obfuscationHandlerConfig>

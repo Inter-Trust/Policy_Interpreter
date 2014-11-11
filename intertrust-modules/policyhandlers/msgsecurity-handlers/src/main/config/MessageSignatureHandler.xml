@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messageEncryptionHandlerConfig>
+    <policyAction>sign</policyAction>
+    <category>http://inter-trust.eu/security/messagesecurity</category>
+    <type>http://inter-trust.eu/security/integrity</type>
+    <targets>
+        <target name="Cam_Msg">http://inter-trust.eu/csa/vehicle/camsender/camencoding</target>
+        <target name="Speed_Not_Msg">http://inter-trust.eu/csa/central/speednotifsender/speednotifsending</target>
+        <target name="Vote">http://inter-trust.eu/evoting/votesender</target>
+    </targets>
+    <methods>
+        <method name="sign" id="http://inter-trust.eu/security/integrity/signature"/>
+        <method name="nosign" policy-ref="no" id="http://inter-trust.eu/security/integrity/nosignature"/>
+        <method name="delegate" policy-ref="delegate" id="http://inter-trust.eu/security/integrity/delegatedsignature"/>
+        <default>sign</default>
+    </methods>
+    <formats>
+        <format name="etsi">http://inter-trust.eu/security/securemsgformat/etsi</format>
+        <format name="cms">http://inter-trust.eu/security/securemsgformat/cms</format>
+        <default>etsi</default>
+    </formats>
+    <ciphers>
+        <algorithm name="DSA" policy-ref="Dsa" id="http://inter-trust.eu/security/algorithm/dsa">
+            <hashing name="sha1" policy-ref="Sha1">http://inter-trust.eu/security/hashing/sha1</hashing>
+            <default>sha1</default>
+        </algorithm>
+        <algorithm name="RSA" id="http://inter-trust.eu/security/algorithm/rsa">
+            <hashing name="sha1">http://inter-trust.eu/security/hashing/sha1</hashing>
+            <hashing name="sha256">http://inter-trust.eu/security/hashing/sha256</hashing>
+            <default>sha256</default>
+        </algorithm>
+        <default>DSA</default>
+    </ciphers>
+    <keys>
+        <keyType name="X509" id="http://inter-trust.eu/security/authentication/x509certificate">
+            <key name="CentralITS">CN=CENTRAL_ITS-S, OU=ITS, O=ROAD_OPERATOR_A, C=ES</key>
+            <key name="DGT">CN=CA.DGT.GOB.ES, OU=ITS, O=DIRECCION GENERAL DE TRAFICO, C=ES</key>
+            <key name="Vehicle">CN=VEHICLE_1, OU=ITS-VEHICLES, O=DIRECCION GENERAL DE TRAFICO, C=ES</key>
+            <default>CentralITS</default>
+        </keyType>
+        <keyType name="Shared" id="http://inter-trust.eu/security/authentication/sharedKey">
+            <key name="CentralITS">A158748E752C6F762232A9D1E7D7E</key>
+            <default>CentralITS</default>
+        </keyType>
+        <default>X509</default>
+    </keys>
+</messageEncryptionHandlerConfig>

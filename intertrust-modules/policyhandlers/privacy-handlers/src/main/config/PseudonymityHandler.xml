@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messageEncryptionHandlerConfig>
+    <policyAction>use-pseudonym</policyAction>
+    <category>http://inter-trust.eu/security/privacy</category>
+    <type>http://inter-trust.eu/security/privacy/pseudonimity</type>
+    <functionality>http://inter-trust.eu/security/privacy/pseudonymity</functionality>   
+    <protectedItems>
+        <item name="StationId" policy-ref="vehicle_Id-1">
+            <dataTarget id="StationId" pseudonym="cert-field:CN">http://inter-trust.eu/csa/vehicle/camsender/camcreation</dataTarget>
+            <signatureTarget>http://inter-trust.eu/csa/vehicle/camsender/camencoding</signatureTarget>
+            <signatureTarget>http://inter-trust.eu/csa/central/speednotifsender/speednotifsending</signatureTarget>
+        </item>
+    </protectedItems>
+    <signature>
+        <functionality>http://inter-trust.eu/security/integrity/signature</functionality>
+        <parameter name="key">Pseudonym</parameter>
+    </signature>            
+</messageEncryptionHandlerConfig>

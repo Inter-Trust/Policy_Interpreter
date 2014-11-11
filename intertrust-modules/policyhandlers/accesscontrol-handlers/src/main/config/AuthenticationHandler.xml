@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<authorizationHandlerConfig>
+    <policyAction>Authentication</policyAction>
+    <category>http://inter-trust.eu/security/accesscontrol</category>
+    <type>http://inter-trust.eu/security/authentication</type>
+    <functionality>http://inter-trust.eu/security/authentication</functionality>
+    <targets>
+        <target name="csa">http://inter-trust.eu/csa/vehicle/login</target>
+        <target name="csa-request">http://inter-trust.eu/csa/central/csaentrypoint</target>
+        <target name="voter_request">http://inter-trust.eu/evoting/votingentrypoint</target>
+    </targets>
+    <authnTypes>
+        <authnType name="recognized">http://inter-trust.eu/security/authentication/recognized</authnType>
+        <authnType name="advanced">http://inter-trust.eu/security/authentication/advanced</authnType>
+        <authnType name="anonymous">http://inter-trust.eu/security/authentication/anonymous</authnType>
+        <authnType name="certificate">http://inter-trust.eu/security/authentication/X509Certificate</authnType>
+        <default>recognized</default>
+    </authnTypes>
+</authorizationHandlerConfig>
